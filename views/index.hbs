@@ -1,0 +1,91 @@
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Blogs</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Home</a>
+                            <span>Blog</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog spad">
+        <div class="container">
+            <div class="row">
+                {{>sidebar}}
+                <div class="col-lg-8 col-md-7">
+                    <div class="row">
+                        {{#each (slice blogs page_start page_end) as |blog|}}
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="blog__item">
+                                <div class="blog__item__pic">
+                                    <img src="{{blog.imagePath}}" alt="">
+                                </div>
+                                <div class="blog__item__text">
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i> {{showDate 
+                                        blog.createdAt}}</li>
+                                        <li><i class="fa fa-comment-o"></i> {{blog.Comments.length}}</li>
+                                    </ul>
+                                    <h5><a href="/blogs/detail/{{blog.id}}">{{blog.title}}</a></h5>
+                                    <p>{{blog.summary}}</p>
+                                    <a href="/blogs/detail/{{blog.id}}" class="blog__btn">READ MORE <span
+                                            class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        <div class="col-lg-12">
+                            <div class="product__pagination blog__pagination">
+                                <a  onclick = "selectPreOrNext(event.target.id)" id ="page-pre"><i onclick = "selectPreOrNext(event.target.parentElement.id)" class="fa fa-long-arrow-left"></i></a>
+                                {{#each (slice blogs 0 length_page) as |blog index|}}
+                                    <a onclick = "selectPage(event.target.id)" id="page-{{inc index}}" >{{inc index}}</a>
+                                {{/each}}
+                                <a onclick = "selectPreOrNext(event.target.id)" id = "page-next-{{length_page}}"><i onclick = "selectPreOrNext(event.target.parentElement.id)" class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+    
+    <script>
+        function selectPage(id){
+            let page = parseInt(id.split('-')[1])
+            let url = window.location.href.split('?')[0]
+            console.log(url)
+            window.location.href = url + "?page=" + page
+        }
+        function selectPreOrNext(id){
+            let page = id.split('-')[1]
+            if (page == "pre"){
+                let [url, page] = window.location.href.split('?')
+                page = page.split('=')[1]
+                if (page != "1"){
+                    page = isNaN(page) ? 1 : parseInt(page) - 1
+                    window.location.href = url + "?page=" + page
+                } 
+            }
+            else if (page == "next"){
+                let [url, page] = window.location.href.split('?')
+                page = page.split('=')[1]
+
+                let maxPage = parseInt(id.split('-')[2])
+                console.log(maxPage)
+                page = isNaN(page) ? 1 : parseInt(page) + 1
+                if (page <= maxPage)
+                    window.location.href = url + "?page=" + page
+            }
+            
+        }
+    </script>
