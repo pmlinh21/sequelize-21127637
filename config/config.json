@@ -1,17 +1,25 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "123456789",
-    "database": "tuan8db",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": "tuan8db_x22q_user",
+    "password": "WjveHxR0epoX0FdRmMAgkNxczlOz9hIB",
+    "database": "tuan8db_x22q",
+    "host": "dpg-clhf7kmg1b2c73aebo20-a.oregon-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "synchronize": true,
+    "ssl": true
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "username": "root",
